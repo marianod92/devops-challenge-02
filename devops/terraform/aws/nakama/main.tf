@@ -1,4 +1,5 @@
 module "label" {
+  enabled    = var.enabled
   source     = "cloudposse/label/null"
   version    = "0.25.0"
   attributes = ["cluster"]
@@ -13,6 +14,7 @@ locals {
 }
 
 module "vpc" {
+  enabled    = var.enabled
   source     = "cloudposse/vpc/aws"
   version    = "0.28.1"
   cidr_block = "172.16.0.0/16"
@@ -21,6 +23,7 @@ module "vpc" {
 }
 
 module "subnets" {
+  enabled                         = var.enabled
   source                          = "cloudposse/dynamic-subnets/aws"
   version                         = "0.39.8"
   availability_zones              = var.availability_zones
@@ -36,6 +39,7 @@ module "subnets" {
 }
 
 module "eks_cluster" {
+  enabled                                                   = var.enabled
   source                                                    = "cloudposse/eks-cluster/aws"
   version                                                   = "0.45.0"
   region                                                    = var.region
@@ -60,6 +64,7 @@ module "eks_cluster" {
 }
 
 module "eks_node_group" {
+  enabled           = var.enabled
   source            = "cloudposse/eks-node-group/aws"
   version           = "0.27.1"
   subnet_ids        = module.subnets.private_subnet_ids
