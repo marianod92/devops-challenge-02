@@ -15,42 +15,42 @@ spec:
     metadata:
       labels:
         io.kompose.service: nakama
-      spec:
-        containers:
-        - command:
-            - /bin/sh
-            - -ecx
-            - |
-              /nakama/nakama migrate up --database.address root@cockroachdb:26257 && exec /nakama/nakama --name nakama1 -console.port 7451 --database.address root@cockroachdb:26257 --logger.level DEBUG --session.token_expiry_sec 7200 --metrics.prometheus_port 9100
-          image: heroiclabs/nakama:3.10.0
-          livenessProbe:
-            exec:
-              command:
-                - curl
-                - -f
-                - http://localhost:7350/
-            failureThreshold: 5
-            periodSeconds: 10
-            timeoutSeconds: 5
-          name: nakama
-          ports:
-            - containerPort: 7349
-            - containerPort: 7350
-            - containerPort: 7451
-            - containerPort: 9100
-          resources:
-            requests:
-              memory: "64Mi"
-              cpu: "250m"
-            limits:
+    spec:
+      containers:
+      - command:
+          - /bin/sh
+          - -ecx
+          - |
+            /nakama/nakama migrate up --database.address root@cockroachdb:26257 && exec /nakama/nakama --name nakama1 -console.port 7451 --database.address root@cockroachdb:26257 --logger.level DEBUG --session.token_expiry_sec 7200 --metrics.prometheus_port 9100
+        image: heroiclabs/nakama:3.10.0
+        livenessProbe:
+          exec:
+            command:
+              - curl
+              - -f
+              - http://localhost:7350/
+          failureThreshold: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+        name: nakama
+        ports:
+          - containerPort: 7349
+          - containerPort: 7350
+          - containerPort: 7451
+          - containerPort: 9100
+        resources:
+          requests:
               memory: "128Mi"
-              cpu: "500m" 
-          volumeMounts:
-            - mountPath: /nakama/data
-              name: nakama-claim
+              cpu: "500m"
+          limits:
+              memory: "512Mi"
+              cpu: "750m" 
+        volumeMounts:
+        - mountPath: /nakama/data
+          name: nakama-claim
       restartPolicy: Always
-  volumes:
-    - name: nakama-claim
-      persistentVolumeClaim:
-        claimName: nakama-claim
+      volumes:
+        - name: nakama-claim
+          persistentVolumeClaim:
+            claimName: nakama-claim
 status: {}
