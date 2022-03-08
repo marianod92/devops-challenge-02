@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: prometheus
+  name: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: prometheus
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: prometheus
+    spec:
+      containers:
+        - args:
+            - |-
+              sh -s <<EOF
+                cat > ./prometheus.yml <<EON
+              global:
+                scrape_interval:     15s
+                evaluation_interval: 15s
+
+              scrape_configs:
+                - job_name: prometheus
+                  static_configs:
+                  - targets: [localhost:9090]
+
+                - job_name: nakama
+                  metrics_path: /
+                  static_configs:
+                  - targets: [nakama:9100]
+              EON
+              prometheus --config.file=./prometheus.yml
+              EOF
+          command:
+            - /bin/sh
+            - -c
+          image: prom/prometheus
+          name: prometheus
+          ports:
+            - containerPort: 9090
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m" 
+      restartPolicy: Always
+status: {}

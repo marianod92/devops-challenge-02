@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: nakama
+  name: nakama
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: nakama
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: nakama
+    spec:
+      containers:
+        - command:
+            - /bin/sh
+            - -ecx
+            - |
+              /nakama/nakama migrate up --database.address postgres:localdb@postgres:5432/nakama && exec /nakama/nakama --name nakama1 -console.port 7451 --database.address postgres:localdb@postgres:5432/nakama --logger.level DEBUG --session.token_expiry_sec 7200
+          image: heroiclabs/nakama:3.10.0
+          livenessProbe:
+            exec:
+              command:
+                - curl
+                - -f
+                - http://localhost:7350/
+            failureThreshold: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+          name: nakama
+          ports:
+            - containerPort: 7349
+            - containerPort: 7350
+            - containerPort: 7451
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m" 
+          volumeMounts:
+            - mountPath: /nakama/data
+              name: nakama-claim
+      restartPolicy: Always
+      volumes:
+        - name: nakama-claim
+          persistentVolumeClaim:
+            claimName: nakama-claim
+        - name: nakama-config-file
+          configMap:
+            name: nakama-configmap            
+status: {}

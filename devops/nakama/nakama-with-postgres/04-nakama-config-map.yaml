@@ -1,0 +1,10 @@
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: nakama-configmap
+# data:
+#   config: |
+#     console:
+#         port: 7451
+#         username: "admin"
+#         password: "adminakama"
