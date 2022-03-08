@@ -51,8 +51,8 @@ on:
   pull_request:
 
 concurrency:
-  group: environment-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
