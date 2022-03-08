@@ -159,3 +159,13 @@ variable "addons" {
   default     = []
   description = "Manages [`aws_eks_addon`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_addon) resources."
 }
+
+#ECR
+variable "encryption_configuration" {
+  type = object({
+    encryption_type = string
+    kms_key         = any
+  })
+  description = "ECR encryption configuration"
+  default     = null
+}

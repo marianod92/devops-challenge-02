@@ -17,5 +17,6 @@ spec:
       targetPort: 7451
   selector:
     io.kompose.service: nakama
+  type: LoadBalancer
 status:
   loadBalancer: {}

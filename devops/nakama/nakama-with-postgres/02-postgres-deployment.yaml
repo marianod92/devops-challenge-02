@@ -22,6 +22,8 @@ spec:
               value: nakama
             - name: POSTGRES_PASSWORD
               value: localdb
+            - name: PGDATA
+              value: /var/lib/postgresql/data/nakama/
           image: postgres:12.2-alpine
           name: postgres
           ports:
