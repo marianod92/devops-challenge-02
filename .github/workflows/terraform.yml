@@ -50,6 +50,11 @@ on:
     - master
   pull_request:
 
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+  AWS_REGION: ${{ secrets.aws_region }}  
+
 jobs:
   terraform:
     name: 'Terraform'
@@ -69,8 +74,9 @@ jobs:
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+    - name: Move to Nakama Directory
+      run: cd devops/terraform/aws/nakama; 
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
