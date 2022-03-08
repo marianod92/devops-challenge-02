@@ -76,7 +76,7 @@ jobs:
       uses: hashicorp/setup-terraform@v1
 
     - name: Move to Nakama Directory
-      run: cd devops/terraform/aws/nakama; echo $PWD
+      run: echo $PWD; ls -la; cd devops/terraform/aws/nakama; echo $PWD
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
