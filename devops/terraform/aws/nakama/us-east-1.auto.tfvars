@@ -1,4 +1,5 @@
-enabled                           = false
+vpc_enabled                       = true
+cluster_enabled                   = true
 region                            = "us-east-1"
 availability_zones                = ["us-east-1a", "us-east-1b", "us-east-1c"]
 namespace                         = "playground"

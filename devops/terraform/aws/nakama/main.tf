@@ -17,7 +17,7 @@ module "vpc" {
   enabled    = var.enabled
   source     = "cloudposse/vpc/aws"
   version    = "0.28.1"
-  cidr_block = "172.16.0.0/16"
+  cidr_block = var.cidr_block
   tags       = local.tags
   context    = module.this.context
 }
@@ -31,7 +31,7 @@ module "subnets" {
   igw_id                          = module.vpc.igw_id
   cidr_block                      = module.vpc.vpc_cidr_block
   nat_gateway_enabled             = var.nat_gateway_enabled
-  nat_instance_enabled            = var.nat_instance_enabled
+  nat_instance_enabled            = var.enabled ? var.nat_instance_enabled : false
   tags                            = local.tags
   public_subnets_additional_tags  = local.public_subnets_additional_tags
   private_subnets_additional_tags = local.private_subnets_additional_tags
@@ -63,17 +63,17 @@ module "eks_cluster" {
   context                                                   = module.this.context
 }
 
-# module "eks_node_group" {
-#   enabled           = var.enabled
-#   source            = "cloudposse/eks-node-group/aws"
-#   version           = "0.27.1"
-#   subnet_ids        = module.subnets.private_subnet_ids
-#   cluster_name      = module.eks_cluster.eks_cluster_id
-#   instance_types    = var.instance_types
-#   desired_size      = var.desired_size
-#   min_size          = var.min_size
-#   max_size          = var.max_size
-#   kubernetes_labels = var.kubernetes_labels
-#   module_depends_on = module.eks_cluster.kubernetes_config_map_id
-#   context           = module.this.context
-# }
+module "eks_node_group" {
+  enabled           = var.enabled
+  source            = "cloudposse/eks-node-group/aws"
+  version           = "0.27.1"
+  subnet_ids        = module.subnets.private_subnet_ids
+  cluster_name      = module.eks_cluster.eks_cluster_id
+  instance_types    = var.instance_types
+  desired_size      = var.desired_size
+  min_size          = var.min_size
+  max_size          = var.max_size
+  kubernetes_labels = var.kubernetes_labels
+  module_depends_on = module.eks_cluster.kubernetes_config_map_id
+  context           = module.this.context
+}

@@ -9,6 +9,12 @@ variable "availability_zones" {
 }
 
 #VPC & Subnets
+variable "vpc_enabled" {
+  type        = bool
+  default     = null
+  description = "Set to false to prevent the module from creating any resources"
+}
+
 variable "cidr_block" {
   type        = string
   description = "IPv4 CIDR to assign to the VPC	"
@@ -27,6 +33,12 @@ variable "nat_instance_enabled" {
 }
 
 #Cluster
+variable "cluster_enabled" {
+  type        = bool
+  default     = null
+  description = "Set to false to prevent the module from creating any resources"
+}
+
 variable "kubernetes_version" {
   type        = string
   default     = "1.21"
