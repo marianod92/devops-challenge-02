@@ -106,9 +106,9 @@ jobs:
 
     - name: Login to Nakama Console (aws-cli)
       run: |
-           export NAKAMA_DNS=$(kubectl get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-           echo $NAKAMA_DNS
-           #aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName'
+           nakama_dns=$(kubectl get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+           echo "::add-mask::$nakama_dns"
+           echo "::set-output name=namaka-dns::$nakama_dns"
 
     - name: Prune
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
