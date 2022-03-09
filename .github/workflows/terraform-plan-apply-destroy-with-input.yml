@@ -34,6 +34,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  name: "nakama"
   AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
   AWS_REGION: ${{ secrets.aws_region }}
@@ -80,6 +81,11 @@ jobs:
       run: echo "${{github.event.inputs.action}}"; terraform ${{github.event.inputs.action}} -auto-approve
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
-    - name: Login to Nakama Console
+    - name: Update kubeconfig
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
-      run: aws eks list-clusters
+      run: aws eks update-kubeconfig --name $(terraform output -raw eks_cluster_id)
+      uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      with:
+       args: get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' | rev | cut -c 1- | rev       
