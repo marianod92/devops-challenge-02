@@ -1,4 +1,4 @@
-name: 'terraform-init-fmt-plan-apply-by-tag'
+name: 'terraform-apply-destroy-by-tag'
 
 # on: 
 #   workflow_dispatch:
