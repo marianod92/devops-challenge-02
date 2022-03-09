@@ -35,7 +35,6 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
   AWS_REGION: ${{ secrets.aws_region }}
   base_working_directory: "devops/terraform/aws/nakama"
-  # working-directory: "devops/terraform/aws/nakama"
 
 jobs:
   terraform:
@@ -63,24 +62,24 @@ jobs:
     - name: Terraform Init
       id: init
       run: terraform init
-      working-directory: "${{ env.base_working_directory }}${{  github.event.inputs.stack }}"
+      working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Terraform Format
       id: fmt
       run: terraform fmt -check
-      working-directory: "${{ env.base_working_directory }}${{  github.event.inputs.stack }}"
+      working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Terraform Plan
       id: plan
       run: terraform plan
-      working-directory: "${{ env.base_working_directory }}${{  github.event.inputs.stack }}"
+      working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'apply'
       run: terraform apply -auto-approve
-      working-directory: "${{ env.base_working_directory }}${{  github.event.inputs.stack }}"
+      working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Terraform destroy
       if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'destroy'
       run: terraform destroy -auto-approve
-      working-directory: "${{ env.base_working_directory }}${{  github.event.inputs.stack }}"
+      working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
