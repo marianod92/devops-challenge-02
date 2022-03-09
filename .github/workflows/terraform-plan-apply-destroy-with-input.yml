@@ -84,6 +84,7 @@ jobs:
     - name: Show URL
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
       run: terraform state pull; terraform output -raw eks_cluster_id
+      working-directory: "${{ env.base_working_directory }}/eks"
 
     # - name: Update kubeconfig
     #   if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
