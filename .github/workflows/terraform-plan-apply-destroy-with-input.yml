@@ -98,32 +98,32 @@ jobs:
     #   with:
     #    args: get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
 
-    - name: Install and configure kubectl
-      run: |
-        VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-        curl https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl \
-            --progress-bar \
-            --location \
-            --remote-name
-        chmod +x kubectl
-        sudo mv kubectl /usr/local/bin/
-        echo ${{ secrets.KUBECONFIG }} | base64 --decode > kubeconfig.yaml
+    # - name: Install and configure kubectl
+    #   run: |
+    #     VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+    #     curl https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl \
+    #         --progress-bar \
+    #         --location \
+    #         --remote-name
+    #     chmod +x kubectl
+    #     sudo mv kubectl /usr/local/bin/
+    #     echo ${{ secrets.KUBECONFIG }} | base64 --decode > kubeconfig.yaml
 
-    - name: Update kubeconfig
-      if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
-      run: aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]') ; export KUBECONFIG=$(cat $HOME/.kube/config | base64)
-      #aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName'
+    # - name: Update kubeconfig
+    #   if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
+    #   run: aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]') ; export KUBECONFIG=$(cat $HOME/.kube/config | base64)
+    #   #aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName'
 
-    - name: Retrieve Nakama Console URL      
-    - id: retrieve-url
-      run: |
-           nakama_dns=$(kubectl get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-           echo "::add-mask::$nakama_dns"
-           echo "::set-output name=namaka-dns::$nakama_dns"
+    # - name: Retrieve Nakama Console URL      
+    # - id: retrieve-url
+    #   run: |
+    #        nakama_dns=$(kubectl get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+    #        echo "::add-mask::$nakama_dns"
+    #        echo "::set-output name=namaka-dns::$nakama_dns"
 
-    - name: Show URL
-      run: |
-          echo "the secret number is ${{ steps.retrieve-url.outputs.nakama_dns }}"s
+    # - name: Show URL
+    #   run: |
+    #       echo "the secret number is ${{ steps.retrieve-url.outputs.nakama_dns }}"s
 
     - name: Prune
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
