@@ -1,0 +1,65 @@
+name: 'terraform-init-fmt-plan-apply-by-tag'
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+  AWS_REGION: ${{ secrets.aws_region }}
+  working-directory: "devops/terraform/aws/nakama"
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: production
+    strategy:
+      matrix: { dir: ['devops/terraform/aws/nakama'] }
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Check Terraform Version
+      id: version
+      run: terraform --version
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+      working-directory: ${{ matrix.dir }}
+
+    - name: Terraform Format
+      id: fmt
+      run: terraform fmt -check
+      working-directory: ${{ matrix.dir }}
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan
+      working-directory: ${{ matrix.dir }}
+
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/master' && github.event_name == 'push' || github.event.inputs.tags == 'apply'
+      run: terraform apply -auto-approve
+      working-directory: ${{ matrix.dir }}
+
+    - name: Terraform destroy
+      if: github.ref == 'refs/heads/master' && github.event.inputs.tags == 'destroy'
+      run: terraform destroy -auto-approve
+      working-directory: ${{ matrix.dir }}
