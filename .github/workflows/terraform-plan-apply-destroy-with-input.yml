@@ -106,8 +106,10 @@ jobs:
 
     - name: Login to Nakama Console (aws-cli)
       run: |
-        echo "kubectl:"; kubectl get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
-        echo "aws-cli:"; aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName'
+        echo "kubectl:" 
+        kubectl get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+        echo "aws-cli:"
+        aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName'
 
     - name: Prune
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
