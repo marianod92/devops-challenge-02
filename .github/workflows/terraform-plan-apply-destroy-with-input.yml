@@ -102,7 +102,7 @@ jobs:
     - name: Update kubeconfig
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
-        aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName') | base64 > dns_coded
+        aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName' | base64 > dns_coded
         base64 --decode dns_coded > dns_decoded
         cat dns_decoded
 
