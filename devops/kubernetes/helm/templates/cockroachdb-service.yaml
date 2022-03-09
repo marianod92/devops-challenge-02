@@ -1,0 +1,20 @@
+{{- if eq .Values.database.type "cockroachdb" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nakama.fullname" . }}-database
+  labels:
+    component: database
+    {{- include "nakama.labels" . | nindent 4 }}
+spec:
+  ports:
+  - name: sql
+    port: {{ .Values.database.port }}
+    targetPort: {{ .Values.database.port }}
+  - name: ui
+    port: 8080
+    targetPort: 8080
+  selector:
+    component: database
+    {{- include "nakama.selectorLabels" . | nindent 4 }}
+{{- end }}

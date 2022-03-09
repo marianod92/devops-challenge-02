@@ -20,6 +20,7 @@ on:
         - apply
         - plan
         - destroy
+        - get-nakame-url
       stack:
         type: choice
         description: Select Terraform Stack
@@ -78,3 +79,7 @@ jobs:
       if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'apply'
       run: echo "${{github.event.inputs.action}}"; terraform ${{github.event.inputs.action}} -auto-approve
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
+
+    - name: Login to Nakama Console
+      if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
+      run: aws eks list-clusters

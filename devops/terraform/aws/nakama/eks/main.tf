@@ -15,6 +15,20 @@ locals {
   eks_worker_ami_name_filter    = "amazon-eks-node-${var.kubernetes_version}*"
 }
 
+data "aws_eks_cluster" "eks" {
+  name = module.eks_cluster.eks_cluster_id
+}
+
+data "aws_eks_cluster_auth" "eks" {
+  name = module.eks_cluster.eks_cluster_id
+}
+
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.eks.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.eks.token
+}
+
 module "eks_cluster" {
   source                                                    = "cloudposse/eks-cluster/aws"
   version                                                   = "0.45.0"
@@ -50,4 +64,24 @@ module "eks_node_group" {
   kubernetes_labels = var.kubernetes_labels
   module_depends_on = module.eks_cluster.kubernetes_config_map_id
   context           = module.this.context
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = data.aws_eks_cluster.eks.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.eks.token
+  }
+}
+
+resource "kubernetes_namespace" "nakama_namespace" {
+  metadata { name = var.name }
+  depends_on = [module.eks_node_group]
+}
+
+resource "helm_release" "nakama" {
+  name      = var.name
+  namespace = kubernetes_namespace.nakama_namespace.id
+  chart     = "../../../../kubernetes/helm/"
+  values    = [file("../../../../kubernetes/helm/values.yaml")]
 }
