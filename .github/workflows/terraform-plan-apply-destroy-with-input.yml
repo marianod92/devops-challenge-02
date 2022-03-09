@@ -91,4 +91,7 @@ jobs:
       env:
         KUBE_CONFIG: "~/.kube/config"
       with:
-       args: get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' | rev | cut -c 1- | rev       
+       args: get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+
+    - name: Prune
+      run: rm -rf ~/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
