@@ -86,6 +86,7 @@ jobs:
       run: aws eks update-kubeconfig --name $(terraform output -raw eks_cluster_id)
 
     - name: Login to Nakama Console
+      if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
       uses: actions-hub/kubectl@master
       env:
         KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
