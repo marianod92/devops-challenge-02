@@ -116,8 +116,8 @@ jobs:
       id: set-outputs
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
-        export 
-        echo "::set-output name=dns::$(("aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName'"))"
+        export DNS=$(aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName')
+        echo "::set-output name=dns::$((DNS))"
 
     - name: Show outputs
       uses: actions/checkout@v2
