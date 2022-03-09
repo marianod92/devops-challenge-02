@@ -83,7 +83,7 @@ jobs:
 
     - name: Update kubeconfig
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
-      run: aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]')
+      run: aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]') ; cat $HOME/runner/.kube/config | base64
 
     - name: Login to Nakama Console
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
