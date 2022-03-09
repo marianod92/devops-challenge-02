@@ -120,6 +120,7 @@ jobs:
         echo "::set-output name=dns::$((DNS))"
 
     - name: Show outputs
+      if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
         echo "URL: ${{ steps.set-outputs.outputs.dns }}"
 
