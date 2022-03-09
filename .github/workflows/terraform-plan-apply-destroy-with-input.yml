@@ -117,7 +117,7 @@ jobs:
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
         export DNS=$(aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName')
-        echo "::set-output name=dns::$((DNS))"
+        echo "::set-output name=dns::$((${DNS}))"
 
     - name: Show outputs
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
