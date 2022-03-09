@@ -145,12 +145,12 @@ variable "addons" {
 #Nakama
 variable "nakama_user" {
   type        = string
-  default     = null
   description = "Nakama user"
+  sensitive   = true
 }
 
 variable "nakama_password" {
   type        = string
-  default     = null
   description = "Nakama password"
+  sensitive   = true
 }
