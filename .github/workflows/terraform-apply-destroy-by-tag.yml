@@ -1,14 +1,14 @@
 name: 'terraform-init-fmt-plan-apply-by-tag'
 
-on: 
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'     
-        required: true
-        default: 'info'
-      tags:
-        description: 'Set terraform action: Apply / Destroy' 
+# on: 
+#   workflow_dispatch:
+#     inputs:
+#       logLevel:
+#         description: 'Log level'     
+#         required: true
+#         default: 'info'
+#       tags:
+#         description: 'Set terraform action: Apply / Destroy' 
 
 on:
   workflow_dispatch:
