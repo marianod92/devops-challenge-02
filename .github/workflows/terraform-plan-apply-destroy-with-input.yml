@@ -83,13 +83,13 @@ jobs:
 
     - name: Update kubeconfig
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
-      run: aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]') ; cat $HOME/runner/.kube/config | base64
+      run: aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]') ; cat $HOME/.kube/config | base64
 
     - name: Login to Nakama Console
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
       uses: actions-hub/kubectl@master
       env:
-        KUBE_CONFIG: "/home/runnner/.kube/config"
+        KUBE_CONFIG: "$HOME/.kube/config"
       with:
        args: get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
 
@@ -97,4 +97,4 @@ jobs:
       run: aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName'
 
     - name: Prune
-      run: rm -rf /home/runnner/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
+      run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
