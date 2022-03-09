@@ -42,9 +42,6 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: production
-    strategy:
-      matrix: { dir: ['devops/terraform/aws/nakama'] }
 
     defaults:
       run:
