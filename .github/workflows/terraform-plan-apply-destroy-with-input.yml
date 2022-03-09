@@ -81,10 +81,10 @@ jobs:
       run: echo "${{github.event.inputs.action}}"; terraform ${{github.event.inputs.action}} -auto-approve
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
-    - name: Show URL
+    - name: Show Outputs
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
       run: terraform state pull; terraform output -raw eks_cluster_id
-      working-directory: "${{ env.base_working_directory }}/eks"
+      working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     # - name: Update kubeconfig
     #   if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
