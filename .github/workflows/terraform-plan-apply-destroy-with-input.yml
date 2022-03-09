@@ -104,16 +104,16 @@ jobs:
         sudo mv kubectl /usr/local/bin/
         echo ${{ secrets.KUBECONFIG }} | base64 --decode > kubeconfig.yaml
 
-    - name: Retrieve Nakama Console URL      
-    - id: retrieve-url
-      run: |
-           nakama_dns=$(kubectl get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-           echo "::add-mask::$nakama_dns"
-           echo "::set-output name=namaka-dns::$nakama_dns"
+    # - name: Retrieve Nakama Console URL      
+    # - id: retrieve-url
+    #   run: |
+    #        nakama_dns=$(kubectl get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+    #        echo "::add-mask::$nakama_dns"
+    #        echo "::set-output name=namaka-dns::$nakama_dns"
 
-    - name: Login into Nakama Console 
-      run: |
-          echo "the secret number is ${{ steps.retrieve-url.outputs.nakama_dns }}"
+    # - name: Login into Nakama Console 
+    #   run: |
+    #       echo "the secret number is ${{ steps.retrieve-url.outputs.nakama_dns }}"
 
     - name: Prune
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
