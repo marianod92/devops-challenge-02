@@ -89,9 +89,9 @@ jobs:
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
       uses: actions-hub/kubectl@master
       env:
-        KUBE_CONFIG: "~/.kube/config"
+        KUBE_CONFIG: "/home/runnner/.kube/config"
       with:
        args: get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
 
     - name: Prune
-      run: rm -rf ~/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
+      run: rm -rf /home/runnner/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
