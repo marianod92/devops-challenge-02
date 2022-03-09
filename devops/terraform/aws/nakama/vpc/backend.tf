@@ -4,7 +4,7 @@ terraform {
   backend "s3" {
     region  = "us-east-1"
     bucket  = "playground-devops-challenges-use1-tfstates-s3"
-    key     = "devops-challenges-02/terraform/aws/shared"
+    key     = "devops-challenges-02/terraform/aws/nakama/vpc"
     encrypt = "true"
   }
 }

@@ -8,7 +8,34 @@ on:
         required: true
         default: 'info'
       tags:
-        description: 'Set terraform action: apply / destroy' 
+        description: 'Set terraform action: Apply / Destroy' 
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        type: choice
+        description: Select Terraform Action
+        options: 
+        - apply
+        - destroy
+      stack:
+        type: choice
+        description: Select Terraform Stack
+        options: 
+        - vpc
+        - eks
+      message:
+        required: true
+      use-emoji:
+        type: boolean
+        description: Include  emojis
+      environment:
+        type: environment
+
+    steps:
+    - name: Send greeting
+      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", ""]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
 
 concurrency:
   group: ${{ github.workflow }}
@@ -18,7 +45,8 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
   AWS_REGION: ${{ secrets.aws_region }}
-  working-directory: "devops/terraform/aws/nakama"
+  base_working_directory: "devops/terraform/aws/nakama"
+  # working-directory: "devops/terraform/aws/nakama"
 
 jobs:
   terraform:
@@ -31,6 +59,10 @@ jobs:
     defaults:
       run:
         shell: bash
+
+    steps:
+    - name: Send greeting
+      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", ""]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.action }} ${{ github.event.inputs.stack }}"" 
 
     steps:
     - name: Checkout
@@ -46,24 +78,24 @@ jobs:
     - name: Terraform Init
       id: init
       run: terraform init
-      working-directory: ${{ matrix.dir }}
+      working-directory: "${{ env.base_working_directory }}${{  github.event.inputs.stack }}"
 
     - name: Terraform Format
       id: fmt
       run: terraform fmt -check
-      working-directory: ${{ matrix.dir }}
+      working-directory: "${{ env.base_working_directory }}${{  github.event.inputs.stack }}"
 
     - name: Terraform Plan
       id: plan
       run: terraform plan
-      working-directory: ${{ matrix.dir }}
+      working-directory: "${{ env.base_working_directory }}${{  github.event.inputs.stack }}"
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/master' && github.event.inputs.tags == 'apply'
+      if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'apply'
       run: terraform apply -auto-approve
-      working-directory: ${{ matrix.dir }}
+      working-directory: "${{ env.base_working_directory }}${{  github.event.inputs.stack }}"
 
     - name: Terraform destroy
-      if: github.ref == 'refs/heads/master' && github.event.inputs.tags == 'destroy'
+      if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'destroy'
       run: terraform destroy -auto-approve
-      working-directory: ${{ matrix.dir }}
+      working-directory: "${{ env.base_working_directory }}${{  github.event.inputs.stack }}"

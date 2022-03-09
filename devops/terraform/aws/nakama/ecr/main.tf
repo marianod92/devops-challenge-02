@@ -1,5 +1,4 @@
 module "ecr" {
-  enabled                  = var.enabled
   source                   = "cloudposse/ecr/aws"
   version                  = "v0.32.3"
   name                     = "ecr"
