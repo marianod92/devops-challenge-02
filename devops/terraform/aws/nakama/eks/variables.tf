@@ -149,7 +149,7 @@ variable "nakama_user" {
   description = "Nakama user"
 }
 
-variable "nakama_user" {
+variable "nakama_password" {
   type        = string
   default     = null
   description = "Nakama password"
