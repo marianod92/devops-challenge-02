@@ -89,9 +89,9 @@ jobs:
     #   run: terraform output -raw eks_cluster_id
     #   working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
-    # - name: Update kubeconfig
-    #   if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
-    #   run: aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]') ; export KUBECONFIG=$(cat $HOME/.kube/config | base64)
+    - name: Update kubeconfig
+      if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
+      run: aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]') ; export KUBECONFIG=$(cat $HOME/.kube/config | base64)
 
     # - name: Login to Nakama Console
     #   if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
@@ -112,10 +112,16 @@ jobs:
     #     sudo mv kubectl /usr/local/bin/
     #     echo ${{ secrets.KUBECONFIG }} | base64 --decode > kubeconfig.yaml
 
-    # - name: Update kubeconfig
-    #   if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
-    #   run: aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]') ; export KUBECONFIG=$(cat $HOME/.kube/config | base64)
-    #   #aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName'
+    - name: Set outputs
+      id: set-outputs
+      if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
+      run: |
+        echo "::set-output name=dns::$((aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName'))"
+
+    - name: Show outputs
+      uses: actions/checkout@v2
+      with:
+        not-a-real-input: ${{ steps.set-outputs.outputs.dns }}
 
     # - name: Retrieve Nakama Console URL      
     # - id: retrieve-url
