@@ -20,7 +20,7 @@ on:
         - apply
         - plan
         - destroy
-        - get-nakame-url
+        - outputs
       stack:
         type: choice
         description: Select Terraform Stack
@@ -82,8 +82,8 @@ jobs:
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Show Outputs
-      if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
-      run: terraform state pull; terraform output -raw eks_cluster_id
+      if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
+      run: terraform output -raw eks_cluster_id
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     # - name: Update kubeconfig
