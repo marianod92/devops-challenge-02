@@ -55,7 +55,7 @@ jobs:
       working-directory: ${{ matrix.dir }}
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/master' && github.event_name == 'push' || github.event.inputs.tags == 'apply'
+      if: github.ref == 'refs/heads/master' && github.event.inputs.tags == 'apply'
       run: terraform apply -auto-approve
       working-directory: ${{ matrix.dir }}
 
