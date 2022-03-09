@@ -83,7 +83,7 @@ jobs:
 
     - name: Update kubeconfig
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
-      run: aws eks update-kubeconfig --name $(terraform output -raw eks_cluster_id)
+      run: aws eks update-kubeconfig --region $(aws configure get region) --name $(aws eks list-clusters | jq -r '.clusters[0]')
 
     - name: Login to Nakama Console
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
