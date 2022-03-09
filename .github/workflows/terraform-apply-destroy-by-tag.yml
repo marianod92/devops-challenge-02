@@ -71,15 +71,16 @@ jobs:
 
     - name: Terraform Plan
       id: plan
+      if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'plan'
       run: terraform plan
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
-    - name: Terraform Apply
+    - name: Terraform "${{github.event.inputs.action}}"
       if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'apply'
-      run: terraform apply -auto-approve
+      run: terraform ${{github.event.inputs.action}} -auto-approve
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
-    - name: Terraform destroy
-      if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'destroy'
-      run: terraform destroy -auto-approve
-      working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
+    # - name: Terraform destroy
+    #   if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'destroy'
+    #   run: terraform destroy -auto-approve
+    #   working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
