@@ -120,9 +120,8 @@ jobs:
         echo "::set-output name=dns::$((DNS))"
 
     - name: Show outputs
-      uses: actions/checkout@v2
-      with:
-        not-a-real-input: ${{ steps.set-outputs.outputs.dns }}
+      run: |
+        echo "URL: ${{ steps.set-outputs.outputs.dns }}"
 
     # - name: Retrieve Nakama Console URL      
     # - id: retrieve-url
