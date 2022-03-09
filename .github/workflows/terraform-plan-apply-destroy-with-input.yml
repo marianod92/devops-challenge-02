@@ -89,6 +89,6 @@ jobs:
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
       uses: actions-hub/kubectl@master
       env:
-        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        KUBE_CONFIG: "~/.kube/config"
       with:
        args: get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' | rev | cut -c 1- | rev       
