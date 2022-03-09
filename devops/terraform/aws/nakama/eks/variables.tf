@@ -141,3 +141,16 @@ variable "addons" {
   default     = []
   description = "Manages [`aws_eks_addon`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_addon) resources."
 }
+
+#Nakama
+variable "nakama_user" {
+  type        = string
+  default     = null
+  description = "Nakama user"
+}
+
+variable "nakama_user" {
+  type        = string
+  default     = null
+  description = "Nakama password"
+}
