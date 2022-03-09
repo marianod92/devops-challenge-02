@@ -1,4 +1,4 @@
-name: 'terraform-apply-destroy-by-tag'
+name: 'terraform-plan-apply-destroy-with-input'
 
 # on: 
 #   workflow_dispatch:
@@ -74,12 +74,7 @@ jobs:
       run: terraform plan
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
-    - name: Terraform Apply/Destroy
+    - name: Terraform Apply | Destroy
       if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'apply'
       run: echo "${{github.event.inputs.action}}"; terraform ${{github.event.inputs.action}} -auto-approve
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
-
-    # - name: Terraform destroy
-    #   if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'destroy'
-    #   run: terraform destroy -auto-approve
-    #   working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
