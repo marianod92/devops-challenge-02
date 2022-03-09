@@ -91,6 +91,6 @@ resource "helm_release" "nakama" {
 
   set {
     name  = "console.password"
-    value = var.password
+    value = var.nakama_password
   }
 }
