@@ -1,9 +1,19 @@
 name: 'terraform-init-fmt-plan-apply-by-tag'
 
-on:
-  push:
-    branches:
-    - master
+on: 
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'info'
+      tags:
+        description: 'Set terraform action: apply / destroy' 
+
+# on:
+#   push:
+#     branches:
+#     - master
 
 concurrency:
   group: ${{ github.workflow }}
