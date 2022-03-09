@@ -18,13 +18,15 @@ on:
         description: Select Terraform Action
         options: 
         - apply
+        - plan
         - destroy
       stack:
         type: choice
         description: Select Terraform Stack
         options: 
-        - vpc
+        - ecr
         - eks
+        - vpc
 
 concurrency:
   group: ${{ github.workflow }}
