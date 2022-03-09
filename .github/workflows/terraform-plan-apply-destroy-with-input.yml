@@ -77,7 +77,7 @@ jobs:
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Terraform Apply | Destroy
-      if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'apply' && github.event.inputs.action == 'destroy'
+      if: github.ref == 'refs/heads/master' && (github.event.inputs.action == 'apply' || github.event.inputs.action == 'destroy')
       run: echo "${{github.event.inputs.action}}"; terraform ${{github.event.inputs.action}} -auto-approve
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
