@@ -30,8 +30,8 @@ extraEnvs: []
 console:
   port: 7451
   grpc: 7348
-  username: "admin"
-  password: "password"
+  # username: "admin"
+  # password: "password"
 
 runtime:
   httpKey: "defaultkey"
