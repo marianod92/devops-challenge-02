@@ -22,8 +22,7 @@ spec:
             - -ecx
             - |
               /nakama/nakama migrate up --database.address postgres:localdb@postgres:5432/nakama && exec /nakama/nakama --name nakama1 -console.port 7451 --database.address postgres:localdb@postgres:5432/nakama --logger.level DEBUG --session.token_expiry_sec 7200
-          # image: heroiclabs/nakama:3.10.0
-          image: ***REMOVED***
+          image: heroiclabs/nakama:3.10.0
           livenessProbe:
             exec:
               command:

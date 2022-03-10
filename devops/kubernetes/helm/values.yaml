@@ -60,11 +60,6 @@ image:
   # tag: 3.10.0
   pullPolicy: IfNotPresent
 
-# image:
-#   repository: 880562894288.dkr.ecr.us-east-1.amazonaws.com/nakama
-#   tag: 1.0
-#   pullPolicy: IfNotPresent
-
 database:
   size: 1000Mi
   type: postgres
