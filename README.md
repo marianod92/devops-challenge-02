@@ -17,7 +17,7 @@ The EKS cluster should be able to pull a docker image of the configuration and c
  - Access to the Nakama console on port 7451.
 
 ### References 
-- [Nakama Server Configuration](https://heroiclabs.com/docs/nakama/getting-started/configuration/) - HTML 
+- [Nakama Server Configuration](https://heroiclabs.com/docs/nakama/getting-started/configuration/)
 
 --
 ## Tech : Hands-On!
