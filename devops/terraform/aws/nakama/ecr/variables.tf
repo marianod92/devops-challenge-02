@@ -17,3 +17,15 @@ variable "encryption_configuration" {
   description = "ECR encryption configuration"
   default     = null
 }
+
+variable "principals_full_access" {
+  type        = list(string)
+  description = "Principal ARNs to provide with full access to the ECR"
+  default     = []
+}
+
+variable "principals_readonly_access" {
+  type        = list(string)
+  description = "Principal ARNs to provide with readonly access to the ECR"
+  default     = []
+}
