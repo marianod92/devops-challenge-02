@@ -105,6 +105,7 @@ resource "helm_release" "nakama" {
   namespace = kubernetes_namespace.nakama_namespace.id
   chart     = "../../../../kubernetes/helm/"
   values    = [file("../../../../kubernetes/helm/values.yaml")]
+
   set {
     name  = "console.username"
     value = var.nakama_user
