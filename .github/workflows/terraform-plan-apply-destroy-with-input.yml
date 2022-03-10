@@ -41,7 +41,7 @@ env:
   base_working_directory: "devops/terraform/aws/nakama"
   TF_VAR_nakama_user: ${{ secrets.nakama_user}}
   TF_VAR_nakama_password: ${{ secrets.nakama_password}}
-
+  TF_VAR_nakama_image_repository: ${{ secrets.nakama_image_repository}}
 
 jobs:
   terraform:

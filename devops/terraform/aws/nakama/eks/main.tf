@@ -115,4 +115,14 @@ resource "helm_release" "nakama" {
     name  = "console.password"
     value = var.nakama_password
   }
+
+  set {
+    name  = "image.repository"
+    value = var.nakama_image_repository
+  }
+
+  set {
+    name  = "image.tag"
+    value = 1.0
+  }
 }

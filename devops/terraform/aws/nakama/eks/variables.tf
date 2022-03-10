@@ -154,3 +154,9 @@ variable "nakama_password" {
   description = "Nakama password"
   sensitive   = true
 }
+
+variable "nakama_image_repository" {
+  type        = string
+  description = "Nakama Image Repository"
+  sensitive   = true
+}
