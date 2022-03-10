@@ -60,11 +60,6 @@ image:
   # tag: 3.10.0
   pullPolicy: IfNotPresent
 
-# image:
-***REMOVED***
-#   tag: 1.0
-#   pullPolicy: IfNotPresent
-
 database:
   size: 1000Mi
   type: postgres
