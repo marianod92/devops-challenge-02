@@ -40,7 +40,7 @@ socket:
   port: 7350
   serverKey: "defaultkey"
   type: LoadBalancer
-  nodePort: 32035
+  nodePort: 32040
   outgoingQueueSize: 16
 
 matchmaker:
