@@ -95,23 +95,23 @@ provider "helm" {
   }
 }
 
-# resource "kubernetes_namespace" "nakama_namespace" {
-#   metadata { name = var.name }
-#   depends_on = [module.eks_node_group]
-# }
+resource "kubernetes_namespace" "nakama_namespace" {
+  metadata { name = var.name }
+  depends_on = [module.eks_node_group]
+}
 
-# resource "helm_release" "nakama" {
-#   name      = var.name
-#   namespace = kubernetes_namespace.nakama_namespace.id
-#   chart     = "../../../../kubernetes/helm/"
-#   values    = [file("../../../../kubernetes/helm/values.yaml")]
-#   set {
-#     name  = "console.username"
-#     value = var.nakama_user
-#   }
+resource "helm_release" "nakama" {
+  name      = var.name
+  namespace = kubernetes_namespace.nakama_namespace.id
+  chart     = "../../../../kubernetes/helm/"
+  values    = [file("../../../../kubernetes/helm/values.yaml")]
+  set {
+    name  = "console.username"
+    value = var.nakama_user
+  }
 
-#   set {
-#     name  = "console.password"
-#     value = var.nakama_password
-#   }
-# }
+  set {
+    name  = "console.password"
+    value = var.nakama_password
+  }
+}
