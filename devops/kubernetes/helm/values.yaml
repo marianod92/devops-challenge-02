@@ -56,8 +56,8 @@ session:
   tokenExpirySec: 6000
 
 image:
-  # repository: heroiclabs/nakama 
-  # tag: 3.10.0
+  repository: heroiclabs/nakama 
+  tag: 3.10.0
   pullPolicy: IfNotPresent
 
 database:
