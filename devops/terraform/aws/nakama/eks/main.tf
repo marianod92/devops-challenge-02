@@ -52,6 +52,26 @@ module "eks_cluster" {
   context                                                   = module.this.context
 }
 
+# resource "aws_iam_policy" "policy_eks_node_group_to_ecr" {
+#   name        = "policy-eks-node-group-to-ecr"
+#   path        = "/"
+#   description = "AWSServiceRoleForAmazonEKSNodegroupToECR"
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Action = [
+#           "ecr:BatchCheckLayerAvailability",
+#           "ecr:BatchGetImage",
+#           "ecr:GetDownloadUrlForLayer",
+#           "ecr:GetAuthorizationToken"]
+#         Effect   = "Allow"
+#         Resource = "*"
+#       },
+#     ]
+#   })
+# }
+
 module "eks_node_group" {
   source            = "cloudposse/eks-node-group/aws"
   version           = "0.27.1"
@@ -63,7 +83,8 @@ module "eks_node_group" {
   max_size          = var.max_size
   kubernetes_labels = var.kubernetes_labels
   module_depends_on = module.eks_cluster.kubernetes_config_map_id
-  context           = module.this.context
+  # node_role_policy_arns = [aws_iam_policy.policy_eks_node_group_to_ecr.arn]
+  context = module.this.context
 }
 
 provider "helm" {

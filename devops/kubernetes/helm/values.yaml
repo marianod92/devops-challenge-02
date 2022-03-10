@@ -40,7 +40,7 @@ socket:
   port: 7350
   serverKey: "defaultkey"
   type: LoadBalancer
-  nodePort: 32040
+  nodePort: 30020
   outgoingQueueSize: 16
 
 matchmaker:
@@ -55,15 +55,15 @@ session:
   encryptionKey: "defaultencryptionkey"
   tokenExpirySec: 6000
 
-# image:
-#   repository: heroiclabs/nakama 
-#   tag: 3.10.0
-#   pullPolicy: IfNotPresent
-
 image:
-  repository: 880562894288.dkr.ecr.us-east-1.amazonaws.com/nakama
-  tag: 1.0
+  repository: heroiclabs/nakama 
+  tag: 3.10.0
   pullPolicy: IfNotPresent
+
+# image:
+***REMOVED***
+#   tag: 1.0
+#   pullPolicy: IfNotPresent
 
 database:
   size: 1000Mi
