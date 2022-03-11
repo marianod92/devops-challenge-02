@@ -99,7 +99,8 @@ jobs:
         export KUBECONFIG=$HOME/.kube/config
         
         echo "Get URL: "
-        until echo $(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
+        until NAKAMA_CONSOLE=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
+        echo "${NAKAMA_CONSOLE}:7451/#/status"
 
     - name: Unset configuration
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
