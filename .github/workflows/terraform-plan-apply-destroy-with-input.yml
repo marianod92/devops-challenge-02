@@ -103,8 +103,9 @@ jobs:
       if: github.event.inputs.action == 'eks' || github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
         bg_green='\033[0;42m'
-        until NAKAMA_CONSOLE=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
-        echo -e "${green}http://"${NAKAMA_CONSOLE}:7451/#/status${clear}"
+        until NAKAMA_CONSOLE_LB=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
+        NAKAMA_CONSOLE_URL="http://S{NAKAMA_CONSOLE_LB}:7451/#/status/
+        $ echo -e "\e[1;41m${NAKAMA_CONSOLE_URL}\e[1;m"
 
     - name: Unset configuration
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
