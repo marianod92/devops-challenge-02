@@ -8,7 +8,8 @@ name: 'terraform-plan-apply-destroy-with-input'
 #         required: true
 #         default: 'info'
 #       tags:
-#         description: 'Set terraform action: Apply / Destroy' 
+#         description: 'Set terraform action: Apply / Destroy'
+
 name: Nakama Server CICD
 on:
   workflow_dispatch:
