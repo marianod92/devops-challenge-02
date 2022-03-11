@@ -109,10 +109,10 @@ jobs:
       run: |
         sudo chmod +x ./devops/utils/wait_for_dns.sh
         ./devops/utils/wait_for_dns.sh
-        until NAKAMA_CONSOLE_LB=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
-        NAKAMA_CONSOLE_URL="http://${NAKAMA_CONSOLE_LB}:7451/#/status/"
 
-        echo -e "\e[1;32m"${NAKAMA_CONSOLE_URL}"\e[1;m"
+      # until NAKAMA_CONSOLE_LB=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
+      # NAKAMA_CONSOLE_URL="http://${NAKAMA_CONSOLE_LB}:7451/#/status/"
+      # echo -e "\e[1;32m"${NAKAMA_CONSOLE_URL}"\e[1;m"
 
     - name: Unset configuration
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
