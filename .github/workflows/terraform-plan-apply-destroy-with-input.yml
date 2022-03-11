@@ -109,7 +109,7 @@ jobs:
       id: set-outputs
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
-        kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}') >> dns
+        kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' >> dns
         cat dns
         
     # - name: Retrieve Nakama Console URL      
