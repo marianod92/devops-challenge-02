@@ -118,17 +118,16 @@ jobs:
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
         export DNS=$(aws elb describe-load-balancers --output text --query 'LoadBalancerDescriptions[].DNSName')
-        echo "::set-output name=dns::$((${DNS}))"
-        echo '::set-output name=action_echo::disabled'
+        echo "::set-output name=dns::$(($DNS))"
+        echo '::set-output name=action_echo::enabled'
         echo '::echo::on'        
 
     - name: Show outputs
       if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
-        echo '::set-output name=action_echo::disabled'
-        echo '::echo::on'      
+        echo '::set-output name=action_echo::enabled'
+        echo '::echo::on'        
         echo "URL: ${{ steps.set-outputs.outputs.dns }}"
-        echo "::set-output name=action_fruit::strawberry"
 
     # - name: Retrieve Nakama Console URL      
     # - id: retrieve-url
