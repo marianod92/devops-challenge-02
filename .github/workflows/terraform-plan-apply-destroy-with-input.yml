@@ -42,6 +42,7 @@ env:
   TF_VAR_nakama_user: ${{ secrets.nakama_user}}
   TF_VAR_nakama_password: ${{ secrets.nakama_password}}
   TF_VAR_nakama_image_repository: ${{ secrets.nakama_image_repository}}
+  TF_VAR_nakama_image_tag: ${{ secrets.nakama_image_tag}}
 
 jobs:
   terraform:
