@@ -90,17 +90,20 @@ jobs:
     #   run: terraform output -raw eks_cluster_id
     #   working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
-    - name: Get URL
+    - name: Update Access
       id: get-url
       if: github.event.inputs.action == 'eks' || github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
         echo "Update Kubeconfig"
         aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]')
         export KUBECONFIG=$HOME/.kube/config
-        
-        echo "Get URL: "
+
+    - name: Get URL
+      id: get-url
+      if: github.event.inputs.action == 'eks' || github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
+      run: |        
         until NAKAMA_CONSOLE=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
-        echo http://"${NAKAMA_CONSOLE}:7451/#/status"
+        tput setaf 2;echo http://"${NAKAMA_CONSOLE}:7451/#/status"
 
     - name: Unset configuration
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
