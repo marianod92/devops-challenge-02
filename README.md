@@ -29,10 +29,6 @@ The EKS cluster should be able to pull a docker image of the configuration and c
 - [kubectl]
 - [helm]
 
-### Arch Diagram
-
-### Repository Layout
-
 ### CICD
 
 ### Deploy Infraestructure Layers
@@ -64,3 +60,33 @@ terraform apply
 ```
 
 ## From CICD (Github Actions Mode)
+
+![Github Actions](assets/img/actions.jpg "Github Actions")
+
+<img src="assets/img/actions-options.jpg" alt="Actions Options" style="height:400px; width:400px;"/> <img src="assets/img/stack-options.jpg" alt="Stack Options" style="height:400px; width:400px;"/>
+
+In the Actions > terraform-plan-apply-destroy-with-input section
+
+You can hit Run Workflow, select the desired Terraform action, and then the Stack:
+
+Actions:
+- Plan: terraform plan
+- Apply: terraform apply
+- Destroy: terraform destroy
+- Outputs: show Nakama Server URL
+
+Stacks:
+- ECR
+- EKS
+- VPC
+
+You just need to execute in this order
+
+- 1: Apply : VPC
+
+- 2: Apply : EKS
+
+At the end of the execution of Apply : EKS, you will be able to observe in the Get URL step of the Pipeline the Endpoint to connect to the Nakama Administration Console:
+
+![Nakama Console URL](assets/img/url-nakama.jpg "URL")
+
