@@ -28,6 +28,8 @@ on:
         - ecr
         - eks
         - vpc
+     tags:
+      - workflow/*        
 
 concurrency:
   group: ${{ github.workflow }}
