@@ -54,6 +54,9 @@ jobs:
         shell: bash
 
     steps:
+    - name: Check kubectl 
+      run: which kubectl
+
     - name: Checkout
       uses: actions/checkout@v2
 
