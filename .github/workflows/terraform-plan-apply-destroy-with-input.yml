@@ -91,7 +91,7 @@ jobs:
     #   working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Update kubeconfig
-      if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'get-nakame-url'
+      if: github.event.inputs.action == 'stack'
       run: |
         aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]') ; export KUBECONFIG=$(cat $HOME/.kube/config | base64)
         kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' >> dns
