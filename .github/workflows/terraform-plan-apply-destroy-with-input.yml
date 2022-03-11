@@ -46,7 +46,7 @@ env:
 
 jobs:
   terraform:
-    name: 'Terraform'
+    name: 'Nakama Server CICD'
     runs-on: ubuntu-latest
 
     defaults:
