@@ -54,6 +54,9 @@ jobs:
         shell: bash
 
     steps:
+    - name: Show Selected Actions/Stack
+      run: echo "Action Selected ${github.event.inputs.stack}  Stack Selected ${github.event.inputs.stack}"
+
     - name: Check kubectl 
       run: which kubectl
 
