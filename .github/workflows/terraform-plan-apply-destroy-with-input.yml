@@ -91,6 +91,7 @@ jobs:
     #   working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Get URL
+      id: get-url
       if: github.event.inputs.action == 'stack' || github.event.inputs.action == 'plan' || github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
         echo "Update Kubeconfig"
@@ -98,8 +99,15 @@ jobs:
         export KUBECONFIG=$HOME/.kube/config
         echo "Get URL"
         kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' > login_url.txt
-        echo "Show URL"
-        cat login_url.txt
+        echo "Set URL"
+
+        export DNS=$(cat login_url.txt)
+        echo "::set-output name=dns::$((DNS))"        
+        echo "::set-output name=namaka-dns::$nakama_dns"        
+       
+    - name: Show URL
+      run: |
+          echo "the secret number is ${{ steps.get-url.outputs.nakama_dns }}"
 
     # - name: Set outputs
     #   id: set-outputs
@@ -115,9 +123,7 @@ jobs:
     #        echo "::add-mask::$nakama_dns"
     #        echo "::set-output name=namaka-dns::$nakama_dns"
 
-    # - name: Show URL
-    #   run: |
-    #       echo "the secret number is ${{ steps.retrieve-url.outputs.nakama_dns }}"s
+
 
     - name: Prune
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
