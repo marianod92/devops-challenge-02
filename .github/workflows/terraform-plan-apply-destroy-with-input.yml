@@ -46,7 +46,7 @@ env:
 
 jobs:
   terraform:
-    name: 'Nakama Server CICD'
+    name: Nakama Server CICD | Action  ${{github.event.inputs.action}} | Stack -> ${{github.event.inputs.stack}}
     runs-on: ubuntu-latest
 
     defaults:
@@ -55,7 +55,9 @@ jobs:
 
     steps:
     - name: Show Selected Actions/Stack
-      run: echo "Action Selected ${github.event.inputs.stack}  Stack Selected ${github.event.inputs.stack}"
+      run: |
+        echo "Action: ${{github.event.inputs.action}}"  
+        echo "Stack: ${{github.event.inputs.stack}}"
 
     - name: Check kubectl 
       run: which kubectl
