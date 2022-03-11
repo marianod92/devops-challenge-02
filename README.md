@@ -29,11 +29,9 @@ The EKS cluster should be able to pull a docker image of the configuration and c
 - [kubectl]
 - [helm]
 
-### CICD
+## Deploy Infraestructure Layers
 
-### Deploy Infraestructure Layers
-
-## From local workspace (manual mode)
+### From local workspace (manual mode)
 #### ECR 
 
 ```sh
