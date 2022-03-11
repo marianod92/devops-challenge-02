@@ -97,33 +97,9 @@ jobs:
         echo "Update Kubeconfig"
         aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]')
         export KUBECONFIG=$HOME/.kube/config
-        echo "Get URL"
-        kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' > login_url.txt
-
-        curl $(cat login_url.txt)
-
-        export DNS=$(cat login_url.txt)
-        echo "::set-output name=dns::$(cat login_url.txt)"        
-       
-    - name: Show URL
-      run: |
-          echo "the secret number is ${{ steps.get-url.outputs.dns }}"
-
-    # - name: Set outputs
-    #   id: set-outputs
-    #   if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
-    #   run: |
-    #     kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' >> dns
-    #     cat dns
         
-    # - name: Retrieve Nakama Console URL      
-    # - id: retrieve-url
-    #   run: |
-    #        nakama_dns=$(kubectl get svc ${{ env.name }} -n ${{ env.name }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-    #        echo "::add-mask::$nakama_dns"
-    #        echo "::set-output name=namaka-dns::$nakama_dns"
+        echo "Get URL: "
+        until echo $(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
 
-
-
-    - name: Prune
+    - name: Unset configuration
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
