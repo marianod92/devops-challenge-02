@@ -1,3 +1,6 @@
+name: Nakama CICD 
+name: Nakama CICD 
+
 # on: 
 #   workflow_dispatch:
 #     inputs:
@@ -27,8 +30,6 @@ on:
         - eks
         - vpc
 
-name: Nakama ${{github.event.inputs.action}} ${{github.event.inputs.stack}}
-
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: false
@@ -43,7 +44,6 @@ env:
   TF_VAR_nakama_password: ${{ secrets.nakama_password}}
   TF_VAR_nakama_image_repository: ${{ secrets.nakama_image_repository}}
   TF_VAR_nakama_image_tag: ${{ secrets.nakama_image_tag}}
-
 
 jobs:
   terraform:
