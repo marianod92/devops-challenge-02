@@ -9,7 +9,7 @@ name: 'terraform-plan-apply-destroy-with-input'
 #         default: 'info'
 #       tags:
 #         description: 'Set terraform action: Apply / Destroy' 
-
+name: Nakama Server CICD
 on:
   workflow_dispatch:
     inputs:
@@ -43,6 +43,7 @@ env:
   TF_VAR_nakama_password: ${{ secrets.nakama_password}}
   TF_VAR_nakama_image_repository: ${{ secrets.nakama_image_repository}}
   TF_VAR_nakama_image_tag: ${{ secrets.nakama_image_tag}}
+
 
 jobs:
   terraform:
