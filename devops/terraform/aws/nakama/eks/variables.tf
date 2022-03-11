@@ -160,3 +160,8 @@ variable "nakama_image_repository" {
   description = "Nakama Image Repository"
   sensitive   = true
 }
+
+variable "nakama_image_tag" {
+  type        = string
+  description = "Nakama Image Tag"
+}
