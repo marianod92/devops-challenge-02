@@ -65,23 +65,25 @@ jobs:
       run: terraform --version
 
     - name: Terraform Init
+      if: github.event.inputs.action != 'outputs'
       id: init
       run: terraform init
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Terraform Format
+      if: github.event.inputs.action != 'outputs'
       id: fmt
       run: terraform fmt -check
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Terraform Plan
       id: plan
-      if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'plan'
+      if: github.ref == 'refs/heads/master' && github.event.inputs.action == 'plan' && github.event.inputs.action != 'outputs'
       run: terraform plan -refresh=true
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
     - name: Terraform Apply | Destroy
-      if: github.ref == 'refs/heads/master' && (github.event.inputs.action == 'apply' || github.event.inputs.action == 'destroy')
+      if: github.ref == 'refs/heads/master' && (github.event.inputs.action == 'apply' || github.event.inputs.action == 'destroy') &&  github.event.inputs.action != 'outputs'
       run: echo "${{github.event.inputs.action}}"; terraform ${{github.event.inputs.action}} -refresh=true -auto-approve
       working-directory: "${{ env.base_working_directory }}/${{  github.event.inputs.stack }}"
 
@@ -92,7 +94,7 @@ jobs:
 
     - name: Update Access
       id: get-url
-      if: github.event.inputs.action == 'eks' || github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
+      if: github.event.inputs.stack == 'eks' && github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
         echo "Update Kubeconfig"
         aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]')
@@ -100,7 +102,7 @@ jobs:
 
     - name: Get URL
       id: show-url
-      if: github.event.inputs.action == 'eks' || github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
+      if: github.event.inputs.stack == 'eks' && github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
         bg_green='\033[0;42m'
         until NAKAMA_CONSOLE_LB=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
