@@ -107,7 +107,7 @@ jobs:
         bg_green='\033[0;42m'
         until NAKAMA_CONSOLE_LB=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
         NAKAMA_CONSOLE_URL="http://S{NAKAMA_CONSOLE_LB}:7451/#/status/"
-        echo -e "\e[1;42m${NAKAMA_CONSOLE_URL}\e[1;m"
+        echo -e "\e[1;32m"${NAKAMA_CONSOLE_URL}"\e[1;m"
 
     - name: Unset configuration
       run: rm -rf $HOME/.kube/config; unset AWS_SECRET_KEY; unset AWS_SECRET_ACCESS_KEY
