@@ -107,6 +107,7 @@ jobs:
       id: show-url
       if: github.event.inputs.stack == 'eks' && github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
       run: |
+        ls -la
         until NAKAMA_CONSOLE_LB=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
         NAKAMA_CONSOLE_URL="http://${NAKAMA_CONSOLE_LB}:7451/#/status/"
 
