@@ -45,7 +45,9 @@ env:
   TF_VAR_nakama_image_tag: ${{ secrets.nakama_image_tag}}
 
 jobs:
-  terraform: ${{github.event.inputs.action}}
+  ${{github.event.inputs.action}}
+  
+  terraform: 
     
     name: Action ${{github.event.inputs.action}} on Stack ${{github.event.inputs.stack}}
 
