@@ -47,7 +47,7 @@ env:
 jobs:
   terraform:
     
-    name: Nakama Server CICD Action  "${{github.event.inputs.action}}" Stack -> "${{github.event.inputs.stack}}"
+    name: Action ${{github.event.inputs.action}} on Stack ${{github.event.inputs.stack}}
 
     runs-on: ubuntu-latest
 
