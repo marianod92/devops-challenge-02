@@ -103,11 +103,10 @@ jobs:
 
         export DNS=$(cat login_url.txt)
         echo "::set-output name=dns::$(cat login_url.txt)"        
-        echo "::set-output name=namaka-dns::$nakama_dns"        
        
     - name: Show URL
       run: |
-          echo "the secret number is ${{ steps.get-url.outputs.nakama_dns }}"
+          echo "the secret number is ${{ steps.get-url.outputs.dns }}"
 
     # - name: Set outputs
     #   id: set-outputs
