@@ -106,7 +106,7 @@ jobs:
       run: |
         until NAKAMA_CONSOLE_LB=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
         NAKAMA_CONSOLE_URL="http://${NAKAMA_CONSOLE_LB}:7451/#/status/"
-        echo $NAKAMA_CONSOLE_URL
+
         echo -e "\e[1;32m"${NAKAMA_CONSOLE_URL}"\e[1;m"
 
     - name: Unset configuration
