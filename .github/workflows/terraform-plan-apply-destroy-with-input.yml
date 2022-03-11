@@ -1,5 +1,3 @@
-name: 'terraform-plan-apply-destroy-with-input'
-
 # on: 
 #   workflow_dispatch:
 #     inputs:
@@ -10,7 +8,6 @@ name: 'terraform-plan-apply-destroy-with-input'
 #       tags:
 #         description: 'Set terraform action: Apply / Destroy'
 
-name: Nakama Server CICD
 on:
   workflow_dispatch:
     inputs:
@@ -29,6 +26,8 @@ on:
         - ecr
         - eks
         - vpc
+
+name: Nakama ${{github.event.inputs.action}} ${{github.event.inputs.stack}}
 
 concurrency:
   group: ${{ github.workflow }}
