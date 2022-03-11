@@ -102,7 +102,7 @@ jobs:
 
     - name: Update Access
       id: get-url
-      if: github.event.inputs.stack == 'eks' && github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
+      if: github.event.inputs.stack == 'eks' && (github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs')
       run: |
         echo "Update Kubeconfig"
         aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]')
@@ -110,7 +110,7 @@ jobs:
 
     - name: Get URL
       id: show-url
-      if: github.event.inputs.stack == 'eks' && github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs'
+      if: github.event.inputs.stack == 'eks' && (github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs')
       run: |
         sudo chmod +x ./devops/utils/wait_for_dns.sh
         ./devops/utils/wait_for_dns.sh
