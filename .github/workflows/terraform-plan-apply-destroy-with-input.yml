@@ -96,9 +96,9 @@ jobs:
         echo "Update Kubeconfig"
         aws eks update-kubeconfig --name $(aws eks list-clusters | jq -r '.clusters[0]') ; export KUBECONFIG=$(cat $HOME/.kube/config | base64)
         echo "Get URL"
-        kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' >> dns
+        kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' > login_url.txt
         echo "Show URL"
-        cat dns
+        cat login_url.txt
 
     # - name: Set outputs
     #   id: set-outputs
