@@ -6,8 +6,10 @@ do
   STATUS=$(curl -s -o /dev/null -w '%{http_code}' $URL)
 
   if [ $STATUS -eq 200 ]; then
+    echo "*********************************************************"
     echo "Got 200! All done!" 
-    echo -e "\e[1;32m"${URL}"\e[1;m"
+    echo -e "\e[1;42m"${URL}"\e[1;m"
+    echo "*********************************************************"
     break
   else
     echo "Got $STATUS :( Not done yet..."
