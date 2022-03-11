@@ -99,6 +99,8 @@ jobs:
         export KUBECONFIG=$HOME/.kube/config
         echo "Get URL"
         kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' > login_url.txt
+        curl $(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+
         echo "Set URL"
 
         export DNS=$(cat login_url.txt)
