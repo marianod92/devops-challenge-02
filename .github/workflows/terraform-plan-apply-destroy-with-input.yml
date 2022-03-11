@@ -37,7 +37,7 @@ env:
   name: "nakama"
   AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
-  AWS_REGION: ${{ secrets.aws_region }}
+  AWS_REGION: us-east-1
   base_working_directory: "devops/terraform/aws/nakama"
   TF_VAR_nakama_user: ${{ secrets.nakama_user}}
   TF_VAR_nakama_password: ${{ secrets.nakama_password}}
