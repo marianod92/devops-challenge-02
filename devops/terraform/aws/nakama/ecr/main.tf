@@ -9,5 +9,5 @@ module "ecr" {
   encryption_configuration = var.encryption_configuration
   image_names              = ["nakama"]
   context                  = module.this.context
-  # principals_readonly_access = length(local.principals_readonly_access_arns) > 0 ? local.principals_readonly_access_arns : []
+  principals_readonly_access = length(local.principals_readonly_access_arns) > 0 ? local.principals_readonly_access_arns : []
 }
