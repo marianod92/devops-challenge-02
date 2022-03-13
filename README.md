@@ -19,7 +19,6 @@ The EKS cluster should be able to pull a docker image of the configuration and c
 ### References 
 - [Nakama Server Configuration](https://heroiclabs.com/docs/nakama/getting-started/configuration/)
 
---
 ## Tech : Hands-On!
 
 ### Pre-Requisites
