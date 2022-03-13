@@ -1,5 +1,5 @@
 locals {
-  principals_readonly_access_arns = [data.terraform_remote_state.remote_eks.outputs.eks_cluster_arn]
+  principals_readonly_access_arns = [data.terraform_remote_state.remote_eks.outputs.eks_node_group_role_arn]
 }
 
 module "ecr" {
