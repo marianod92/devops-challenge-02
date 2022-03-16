@@ -10,9 +10,9 @@ oidc_provider_enabled             = true
 enabled_cluster_log_types         = ["audit"]
 cluster_log_retention_period      = 7
 instance_types                    = ["t3.medium"]
-desired_size                      = 1
-max_size                          = 1
-min_size                          = 1
+desired_size                      = 2
+max_size                          = 3
+min_size                          = 2
 kubernetes_labels                 = {}
 cluster_encryption_config_enabled = true
 addons = [
@@ -23,3 +23,4 @@ addons = [
     service_account_role_arn = null
   }
 ]
+deploy_apps = false

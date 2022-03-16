@@ -96,11 +96,13 @@ provider "helm" {
 }
 
 resource "kubernetes_namespace" "nakama_namespace" {
+  count = var.deploy_apps ? 1 : 0
   metadata { name = var.name }
   depends_on = [module.eks_node_group]
 }
 
 resource "helm_release" "nakama" {
+  count     = var.deploy_apps ? 1 : 0
   name      = var.name
   namespace = kubernetes_namespace.nakama_namespace.id
   chart     = "../../../../kubernetes/helm/"

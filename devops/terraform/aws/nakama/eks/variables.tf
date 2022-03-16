@@ -165,3 +165,8 @@ variable "nakama_image_tag" {
   type        = string
   description = "Nakama Image Tag"
 }
+
+variable "deploy_apps" {
+  type        = bool
+  description = "Boolean flag for enable/disable app deployment on provision from scratch"
+}
