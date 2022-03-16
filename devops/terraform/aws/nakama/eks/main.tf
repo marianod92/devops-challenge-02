@@ -104,7 +104,7 @@ resource "kubernetes_namespace" "nakama_namespace" {
 resource "helm_release" "nakama" {
   count     = var.deploy_apps ? 1 : 0
   name      = var.name
-  namespace = kubernetes_namespace.nakama_namespace.id
+  namespace = kubernetes_namespace.nakama_namespace[0].id
   chart     = "../../../../kubernetes/helm/"
   values    = [file("../../../../kubernetes/helm/values.yaml")]
 
