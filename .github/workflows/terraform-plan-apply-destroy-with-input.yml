@@ -113,7 +113,7 @@ jobs:
       if: github.event.inputs.stack == 'eks' && (github.event.inputs.action == 'apply' || github.event.inputs.action == 'outputs')
       run: |
         sudo chmod +x ./devops/utils/wait_for_dns.sh
-        ./devops/utils/wait_for_dns.sh
+        timeout 120 ./devops/utils/wait_for_dns.sh
 
       # until NAKAMA_CONSOLE_LB=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'); do : ; done
       # NAKAMA_CONSOLE_URL="http://${NAKAMA_CONSOLE_LB}:7451/#/status/"
