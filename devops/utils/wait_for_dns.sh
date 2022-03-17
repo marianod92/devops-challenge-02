@@ -1,4 +1,12 @@
 # #!/bin/bash
+
+Timeout=180 # 30 minutes
+
+function timeout_monitor() {
+   sleep "$Timeout"
+   kill "$1"
+}
+
 while true
 do
   LB_DNS=$(kubectl get svc nakama -n nakama -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
