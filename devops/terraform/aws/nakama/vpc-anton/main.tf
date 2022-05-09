@@ -17,6 +17,7 @@ locals {
 ################################################################################
 
 module "vpc" {
+  #tfsec:ignore:aws-vpc-no-public-ingress-sgr 
   source  = "terraform-aws-modules/vpc/aws"
   version = "v3.14.0"
 
