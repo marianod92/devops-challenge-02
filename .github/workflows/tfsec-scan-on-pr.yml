@@ -2,7 +2,7 @@ name: tfsec
 on:
   push:
     branches:
-      - main
+      - test-tfsec-action-on-pr
   pull_request:
 jobs:
   tfsec:
