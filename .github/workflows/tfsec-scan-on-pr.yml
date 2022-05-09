@@ -14,3 +14,6 @@ jobs:
         uses: actions/checkout@master
       - name: tfsec
         uses: aquasecurity/tfsec-action@v1.0.0
+        with:
+          working-directory: devops/terraform/aws/nakama/vpc-anton
+          
