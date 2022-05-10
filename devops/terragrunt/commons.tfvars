@@ -1,0 +1,9 @@
+#Common environment values
+allowed_accounts_ids   = ["880562894288"]
+region                 = "us-east-1"
+environment            = "devops"
+profile                = ""
+namespace              = "challengue"
+name                   = "02"
+delimiter              = "-"
+s3_bucket_tfstate_name = "playground-devops-challenges-use1-tfstates-s3"
