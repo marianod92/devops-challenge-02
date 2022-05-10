@@ -28,6 +28,7 @@ on:
         - ecr
         - eks
         - vpc
+        - vpc-anton
 
 concurrency:
   group: ${{ github.workflow }}
