@@ -241,7 +241,7 @@ resource "aws_security_group" "vpc_tls" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [module.vpc.vpc_cidr_block]
+    cidr_blocks = [module.vpc.vpc_cidr_block] #tfsec:ignore:AWS006
   }
 
   tags = local.tags
